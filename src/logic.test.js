@@ -1,0 +1,6 @@
+import{test}from'node:test';import assert from'node:assert/strict';import{validOutfit,combinations,suggest,slots}from'./logic.js';import{demoItems}from'./data.js';
+test('allows one top and one bottom',()=>assert.equal(validOutfit([demoItems[0],demoItems[1]]),true));
+test('rejects incompatible layering and tops-only lines',()=>{assert.equal(validOutfit([demoItems[0],demoItems[2],demoItems[1]]),false);assert.equal(validOutfit([demoItems[0],demoItems[4],demoItems[6]]),false)});
+test('allows base + over + bottom',()=>assert.equal(validOutfit([demoItems[4],demoItems[5],demoItems[3]]),true));
+test('demo has 16 compatible pairs and only valid straight paths',()=>{const board=demoItems.slice(0,9).map(x=>x.id),result=combinations(board,demoItems);assert.equal(result.pairs.length,16);assert.equal(result.paths.length,3);result.paths.forEach(p=>assert.ok(validOutfit(p.map(i=>demoItems[i]))))});
+test('empty board is safe; suggestion preserves categories and never invents clothes',()=>{assert.deepEqual(combinations(Array(9).fill(null),[]),{pairs:[],paths:[]});assert.ok(suggest([], '여름').every(x=>x===null));const board=suggest(demoItems,'가을');board.forEach((id,i)=>assert.equal(demoItems.find(x=>x.id===id).category,slots[i]));assert.equal(new Set(board).size,9)});
