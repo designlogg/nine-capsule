@@ -9,7 +9,7 @@ export function MobileSelectionDock({ chosen, valid, onPreview, onClear }) {
       <button className="dock-clear" onClick={onClear} aria-label="모바일 선택 해제"><X size={18} /></button>
       <div className="dock-summary">
         <div className="dock-thumbnails" aria-hidden="true">{chosen.map(item => <Garment key={item.id} item={item} />)}</div>
-        <div><strong>{chosen.length}개 선택</strong><span>{valid ? '마음에 드는 조합을 완성해보세요' : chosen.length === 1 ? (chosen[0].category === '하의' ? '함께 입을 상의를 골라주세요' : '함께 입을 하의를 골라주세요') : '레이어와 조합을 다시 확인해주세요'}</span></div>
+        <div><strong>{chosen.length}개 선택</strong><span>{valid ? '저장할 준비 완료' : chosen.length === 1 ? (chosen[0].category === '하의' ? '상의를 골라주세요' : '하의를 골라주세요') : '조합을 확인해주세요'}</span></div>
       </div>
       <button className="dark" disabled={!valid} onClick={onPreview}>코디 보기 <ArrowRight size={15} /></button>
     </section>
@@ -24,7 +24,7 @@ export function MobileLookPreview({ chosen, kit, items, onToggleKit, onSave }) {
       <h2>오늘의 나, 이렇게.</h2>
       <p className="muted">작은 디테일을 더하고, 마음에 드는 조합을 남겨보세요.</p>
       <div className="look-stage">{chosen.map(item => <div key={item.id}><Garment item={item} /><span>{item.name}</span></div>)}</div>
-      <div className="look-kit-heading"><h3>함께할 함께 입는 아이템</h3><span>선택 {kit.length}</span></div>
+      <div className="look-kit-heading"><h3>함께 입는 아이템</h3><span>선택 {kit.length}</span></div>
       {extras.length ? <div className="look-kit-scroll">{extras.map(item => <button key={item.id} aria-label={`함께 입는 아이템 ${item.name}`} aria-pressed={kit.includes(item.id)} className={kit.includes(item.id) ? 'selected' : ''} onClick={() => onToggleKit(item.id)}><Garment item={item} /><span>{item.name}</span><i>{kit.includes(item.id) ? <Check size={12} /> : '+'}</i></button>)}</div> : <p className="muted">옷장에 신발이나 가방을 추가하면 함께 고를 수 있어요.</p>}
       <div className="sheet-save-action"><button className="dark full" onClick={onSave}>이 코디 저장하기 <Bookmark size={17} /></button></div>
     </div>
